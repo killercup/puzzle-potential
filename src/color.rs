@@ -48,6 +48,7 @@ fn add_circles(
     }
 }
 
+// Inspired by https://stackoverflow.com/a/43195379/1254484
 fn random_color(rng: &mut GlobalRng) -> Color {
     let hue = rng.usize(0..3600) as f32 / 10.;
     let saturation = rng.usize(100..900) as f32 / 1000.;
@@ -59,6 +60,7 @@ fn random_color(rng: &mut GlobalRng) -> Color {
 
 fn drag_circles() {}
 
+// Inspired by https://stackoverflow.com/a/36177801/1254484
 fn generate_circle_places(
     number: usize,
     radius: f32,
