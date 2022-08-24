@@ -1,5 +1,6 @@
 mod actions;
 mod audio;
+mod color;
 mod loading;
 mod menu;
 mod player;
@@ -14,6 +15,7 @@ use bevy::app::App;
 #[cfg(debug_assertions)]
 use bevy::diagnostic::{FrameTimeDiagnosticsPlugin, LogDiagnosticsPlugin};
 use bevy::prelude::*;
+use bevy_prototype_lyon::prelude::ShapePlugin;
 
 // This example game uses States to separate logic
 // See https://bevy-cheatbook.github.io/programming/states.html
@@ -35,14 +37,15 @@ impl Plugin for GamePlugin {
         app.add_state(GameState::Loading)
             .add_plugin(LoadingPlugin)
             .add_plugin(MenuPlugin)
-            .add_plugin(ActionsPlugin)
+            // .add_plugin(ActionsPlugin)
             .add_plugin(InternalAudioPlugin)
-            .add_plugin(PlayerPlugin);
+            // .add_plugin(PlayerPlugin)
+            .add_plugin(ShapePlugin)
+            .add_plugin(color::ColorCirclePlugin);
 
         #[cfg(debug_assertions)]
         {
-            app.add_plugin(FrameTimeDiagnosticsPlugin::default())
-                .add_plugin(LogDiagnosticsPlugin::default());
+            app.add_plugin(LogDiagnosticsPlugin::default());
         }
     }
 }

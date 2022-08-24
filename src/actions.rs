@@ -7,9 +7,10 @@ pub struct ActionsPlugin;
 // Actions can then be used as a resource in other systems to act on the player input.
 impl Plugin for ActionsPlugin {
     fn build(&self, app: &mut App) {
-        app.init_resource::<Actions>().add_system_set(
-            SystemSet::on_update(GameState::Playing).with_system(set_movement_actions),
-        );
+        app.init_resource::<Actions>();
+        // app.add_system_set(
+        //     SystemSet::on_update(GameState::Playing).with_system(set_movement_actions),
+        // );
     }
 }
 

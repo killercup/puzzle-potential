@@ -15,11 +15,11 @@ use bevy_editor_pls::prelude::*;
 fn main() {
     let mut app = App::new();
     app.insert_resource(Msaa { samples: 1 });
-    app.insert_resource(ClearColor(Color::rgb(0.4, 0.4, 0.4)));
+    app.insert_resource(ClearColor(Color::hsl(1.0, 1.0, 0.99)));
     app.insert_resource(WindowDescriptor {
-        width: 800.,
-        height: 600.,
-        title: "Bevy game".to_string(), // ToDo
+        width: 1200.,
+        height: 800.,
+        title: "Cheesy color combine challenge".to_string(),
         canvas: Some("#bevy".to_owned()),
         ..Default::default()
     });
