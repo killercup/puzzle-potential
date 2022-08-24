@@ -9,21 +9,29 @@ use bevy_game::GamePlugin;
 use std::io::Cursor;
 use winit::window::Icon;
 
+#[cfg(feature = "dev")]
+use bevy_editor_pls::prelude::*;
+
 fn main() {
-    App::new()
-        .insert_resource(Msaa { samples: 1 })
-        .insert_resource(ClearColor(Color::rgb(0.4, 0.4, 0.4)))
-        .insert_resource(WindowDescriptor {
-            width: 800.,
-            height: 600.,
-            title: "Bevy game".to_string(), // ToDo
-            canvas: Some("#bevy".to_owned()),
-            ..Default::default()
-        })
-        .add_plugins(DefaultPlugins)
-        .add_plugin(GamePlugin)
-        .add_startup_system(set_window_icon)
-        .run();
+    let mut app = App::new();
+    app.insert_resource(Msaa { samples: 1 });
+    app.insert_resource(ClearColor(Color::rgb(0.4, 0.4, 0.4)));
+    app.insert_resource(WindowDescriptor {
+        width: 800.,
+        height: 600.,
+        title: "Bevy game".to_string(), // ToDo
+        canvas: Some("#bevy".to_owned()),
+        ..Default::default()
+    });
+    app.add_plugins(DefaultPlugins);
+
+    app.add_plugin(GamePlugin);
+    app.add_startup_system(set_window_icon);
+
+    #[cfg(feature = "dev")]
+    app.add_plugin(EditorPlugin);
+
+    app.run();
 }
 
 // Sets the icon on windows and X11
