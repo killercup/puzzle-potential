@@ -1,17 +1,17 @@
 // disable console on windows for release builds
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
+#![allow(clippy::type_complexity)]
 
 use bevy::prelude::{App, ClearColor, Color, Msaa, NonSend, WindowDescriptor};
 use bevy::window::WindowId;
 use bevy::winit::WinitWindows;
 use bevy::DefaultPlugins;
 use bevy_game::GamePlugin;
-use bevy_mod_picking::{DebugEventsPickingPlugin, DefaultPickingPlugins};
 use std::io::Cursor;
 use winit::window::Icon;
 
 #[cfg(feature = "dev")]
-use bevy_editor_pls::prelude::*;
+mod dev;
 
 fn main() {
     let mut app = App::new();
@@ -25,15 +25,14 @@ fn main() {
         ..Default::default()
     });
     app.add_plugins(DefaultPlugins);
-    app.add_plugins(DefaultPickingPlugins);
+    app.add_plugin(bevy_mod_picking::PickingPlugin);
+    app.add_plugin(bevy_mod_picking::InteractablePickingPlugin);
 
     app.add_plugin(GamePlugin);
     app.add_startup_system(set_window_icon);
 
     #[cfg(feature = "dev")]
-    app.add_plugin(EditorPlugin);
-    #[cfg(feature = "dev")]
-    app.add_plugin(DebugEventsPickingPlugin);
+    app.add_plugin(dev::DevPlugin);
 
     app.run();
 }
