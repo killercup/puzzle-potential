@@ -1,6 +1,7 @@
 mod actions;
 mod audio;
 mod color;
+mod draggable;
 mod loading;
 mod menu;
 mod player;
@@ -11,10 +12,11 @@ use crate::loading::LoadingPlugin;
 use crate::menu::MenuPlugin;
 use crate::player::PlayerPlugin;
 
-use bevy::app::App;
 #[cfg(debug_assertions)]
 use bevy::diagnostic::{FrameTimeDiagnosticsPlugin, LogDiagnosticsPlugin};
 use bevy::prelude::*;
+use bevy::{app::App, render::camera::RenderTarget};
+use bevy_mod_picking::PickingCameraBundle;
 use bevy_prototype_lyon::prelude::ShapePlugin;
 
 // This example game uses States to separate logic
@@ -34,14 +36,18 @@ pub struct GamePlugin;
 
 impl Plugin for GamePlugin {
     fn build(&self, app: &mut App) {
-        app.add_state(GameState::Loading)
-            .add_plugin(LoadingPlugin)
-            .add_plugin(MenuPlugin)
-            // .add_plugin(ActionsPlugin)
-            .add_plugin(InternalAudioPlugin)
-            // .add_plugin(PlayerPlugin)
-            .add_plugin(ShapePlugin)
-            .add_plugin(color::ColorCirclePlugin);
+        app.add_state(GameState::Loading);
+
+        app.add_startup_system(camera_setup);
+
+        app.add_plugin(LoadingPlugin);
+        app.add_plugin(MenuPlugin);
+        // app.add_plugin(ActionsPlugin);
+        app.add_plugin(InternalAudioPlugin);
+        // app.add_plugin(PlayerPlugin);
+        app.add_plugin(ShapePlugin);
+        app.add_plugin(color::ColorCirclePlugin);
+        app.add_plugin(draggable::DragPlugin);
 
         #[cfg(debug_assertions)]
         {
@@ -49,3 +55,14 @@ impl Plugin for GamePlugin {
         }
     }
 }
+
+fn camera_setup(mut commands: Commands) {
+    commands
+        .spawn_bundle(Camera2dBundle::default())
+        .insert(MainCamera)
+        .insert_bundle(PickingCameraBundle::default());
+}
+
+/// Used to help identify our main camera
+#[derive(Component)]
+pub struct MainCamera;

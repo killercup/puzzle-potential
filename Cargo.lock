@@ -483,6 +483,7 @@ dependencies = [
  "bevy_asset_loader",
  "bevy_editor_pls",
  "bevy_kira_audio",
+ "bevy_mod_picking",
  "bevy_prototype_lyon",
  "bevy_turborand",
  "embed-resource",
@@ -646,6 +647,16 @@ dependencies = [
  "bevy_ecs",
  "bevy_render",
  "pretty-type-name",
+]
+
+[[package]]
+name = "bevy_mod_picking"
+version = "0.9.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "db42ac84b1409452bbfa696d9071b9a7a2505c73620c939b758b5bf23573976a"
+dependencies = [
+ "bevy",
+ "bevy_mod_raycast",
 ]
 
 [[package]]

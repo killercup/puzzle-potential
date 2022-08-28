@@ -1,8 +1,9 @@
 use bevy::{prelude::*, sprite::MaterialMesh2dBundle};
+use bevy_mod_picking::PickableBundle;
 use bevy_prototype_lyon::{entity::ShapeBundle, prelude::*};
 use bevy_turborand::*;
 
-use crate::GameState;
+use crate::{draggable::Draggable, GameState};
 
 pub struct ColorCirclePlugin;
 
@@ -43,6 +44,8 @@ fn add_circles(
                 ),
                 ..default()
             })
+            .insert_bundle(PickableBundle::default())
+            .insert(Draggable)
             .insert(ColorCircle)
             .insert(Name::from(format!("Color circle {i}")));
     }

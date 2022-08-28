@@ -1,6 +1,7 @@
 use crate::loading::FontAssets;
 use crate::GameState;
 use bevy::prelude::*;
+use bevy_mod_picking::PickingCameraBundle;
 
 pub struct MenuPlugin;
 
@@ -34,7 +35,6 @@ fn setup_menu(
     font_assets: Res<FontAssets>,
     button_colors: Res<ButtonColors>,
 ) {
-    commands.spawn_bundle(Camera2dBundle::default());
     commands
         .spawn_bundle(ButtonBundle {
             style: Style {

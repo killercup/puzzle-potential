@@ -6,6 +6,7 @@ use bevy::window::WindowId;
 use bevy::winit::WinitWindows;
 use bevy::DefaultPlugins;
 use bevy_game::GamePlugin;
+use bevy_mod_picking::{DebugEventsPickingPlugin, DefaultPickingPlugins};
 use std::io::Cursor;
 use winit::window::Icon;
 
@@ -24,12 +25,15 @@ fn main() {
         ..Default::default()
     });
     app.add_plugins(DefaultPlugins);
+    app.add_plugins(DefaultPickingPlugins);
 
     app.add_plugin(GamePlugin);
     app.add_startup_system(set_window_icon);
 
     #[cfg(feature = "dev")]
     app.add_plugin(EditorPlugin);
+    #[cfg(feature = "dev")]
+    app.add_plugin(DebugEventsPickingPlugin);
 
     app.run();
 }
